@@ -1,0 +1,24 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# production
+/build
+/binary
+/binary/server-linux-amd64
+/binary/server-linux-arm64
+/binary/server-linux-arm
+/binary/server-win-amd64
+/binary/server-win-arm64
+
+# misc
+.DS_Store
+*.pem
+
+# database
+database.db
+*.db
+*.db*
+*.db-wal
+*.db-shm
+
+# env files (can opt-in for committing if needed)
+.env*

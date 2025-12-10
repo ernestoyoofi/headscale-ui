@@ -1,0 +1,28 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# production
+/backend/bin
+/backend/build
+/backend/binary
+/backend/binary/server-linux-amd64
+/backend/binary/server-linux-arm64
+/backend/binary/server-linux-arm
+/backend/binary/server-win-amd64
+/backend/binary/server-win-arm64
+
+# unuse
+/.trash
+/.idea
+/.mcp
+
+# environment secret
+/cmd/secret/
+# env files (can opt-in for committing if needed)
+/.env
+.env*
+
+# database
+/*.db
+/*.db*
+/*.db-shm
+/*.db-wal
