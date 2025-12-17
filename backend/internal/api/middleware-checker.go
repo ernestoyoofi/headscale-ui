@@ -6,8 +6,8 @@ import (
 	"net/http"
 
 	"headscale-ui.backend/internal/service"
-	"headscale-ui.backend/pkg/structure"
 	"headscale-ui.backend/pkg/handle_http"
+	"headscale-ui.backend/pkg/structure"
 )
 
 func API_MiddlewareChecker(w http.ResponseWriter, r *http.Request) {
@@ -32,7 +32,7 @@ func API_MiddlewareChecker(w http.ResponseWriter, r *http.Request) {
   }
 
   // Execute
-  dataUsername, dataSetupAccount, dataIsLogin, dataIsBackendError := service.Service_MiddlewareCheck(valueCookie)
+  dataUsername, dataSetupAccount, dataIsLogin, haveKeyAPI, dataIsBackendError := service.Service_MiddlewareCheck(valueCookie)
 
   dataReturn := structure.HTTP_Response_Data_Type{
     Status: http.StatusOK,
@@ -40,6 +40,7 @@ func API_MiddlewareChecker(w http.ResponseWriter, r *http.Request) {
       Username: dataUsername,
       IsSetup: dataSetupAccount,
       IsLogin: dataIsLogin,
+      HaveKeyAPI: haveKeyAPI,
       IsBackendError: dataIsBackendError,
     },
   }

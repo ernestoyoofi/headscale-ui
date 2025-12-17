@@ -27,7 +27,7 @@ func API_UpdatePassword(w http.ResponseWriter, r *http.Request) {
   cookie, err := r.Cookie(handle_http.CookieAuthAdminKey)
   if err != nil {
     if err != http.ErrNoCookie {
-      log.Println("Cookie Auth Error handleing", err.Error())
+      log.Println("[api/update-password]: Cookie Auth Error handleing", err.Error())
     }
   } else {
     valueCookie = cookie.Value
@@ -36,6 +36,7 @@ func API_UpdatePassword(w http.ResponseWriter, r *http.Request) {
   // Get Body
   bodyReq, err := io.ReadAll(r.Body)
   if err != nil {
+    log.Println("[api/update-password]: Body Error", err.Error())
     handle_http.HTTP_Response_Error(w, http.StatusBadRequest, "No body?")
     return
   }
@@ -45,6 +46,7 @@ func API_UpdatePassword(w http.ResponseWriter, r *http.Request) {
   var dataReqJson structure.HTTP_Request_UpdatePassword
   err = json.Unmarshal(bodyReq, &dataReqJson)
   if err != nil {
+    log.Println("[api/update-password]: Format Json Error", err.Error())
     handle_http.HTTP_Response_Error(w, http.StatusBadRequest, "Format is not json, maybe...")
     return
   }

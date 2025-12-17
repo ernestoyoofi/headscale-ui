@@ -35,11 +35,11 @@ func main() {
 
   // Handle API
   http.HandleFunc("/health", HealthTest) // Health check
-  http.HandleFunc("/side-api/md-checker", api.API_MiddlewareChecker) // Middleware check
-  http.HandleFunc("/side-api/new-default-admin", api.API_NewDefaultAdmin) // Register
-  http.HandleFunc("/side-api/login", api.API_LoginAccount) // Login
-  http.HandleFunc("/side-api/update-password", api.API_UpdatePassword) // Update password
-  http.HandleFunc("/side-api/update-token-key", api.API_UpdateTokenKey) // Update token key
+  http.HandleFunc("/api/backend/md-checker", api.API_MiddlewareChecker) // Middleware check
+  http.HandleFunc("/api/backend/new-default-admin", api.API_NewDefaultAdmin) // Register
+  http.HandleFunc("/api/backend/login", api.API_LoginAccount) // Login
+  http.HandleFunc("/api/backend/update-password", api.API_UpdatePassword) // Update password
+  http.HandleFunc("/api/backend/update-token-key", api.API_UpdateTokenKey) // Update token key
 
   // Proxy API Middleware
   http.Handle("/api/v1/",
@@ -50,7 +50,7 @@ func main() {
   )
 
   // Running
-  log.Printf("[server.go]: Running at port %v\n", addrlisten)
+  log.Printf("[Server]: Running at port http://%v\n", addrlisten)
   http.ListenAndServe(addrlisten, nil)
 }
 

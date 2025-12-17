@@ -20,12 +20,16 @@ type HTTP_Request_UpdatePassword struct {
   PasswordNew     string `json:"password_new"`
   PasswordConfrim string `json:"password_confrim"`
 }
+type HTTP_Request_UpdateTokenKey struct {
+  TokenKey    string `json:"apikey"`
+}
 
 // Data Respon
 type HTTP_Response_MiddlewareChecker struct {
   Username       string `json:"username"`
   IsSetup        bool   `json:"is_setup"`
   IsLogin        bool   `json:"is_login"`
+  HaveKeyAPI     bool   `json:"have_apikey"`
   IsBackendError bool   `json:"backend_err"`
 }
 type HTTP_Response_ActionSucces struct {

@@ -1,6 +1,7 @@
 package service
 
 import (
+	"log"
 	"net/http"
 
 	"headscale-ui.backend/pkg/action"
@@ -9,6 +10,7 @@ import (
 )
 
 func Service_UpdatePassword(JwtToken string, PasswordNow string, PasswordUp string, PasswordConfrim string) (SuccessData bool, StatusCode int, ResError string) {
+	// Is Auth Login
 	UserId, _, _, authPasswordHash, CodeStatus, errs := action.IsLogin(JwtToken)
 	if errs != nil {
 		return false, CodeStatus, (*errs)
@@ -36,6 +38,7 @@ func Service_UpdatePassword(JwtToken string, PasswordNow string, PasswordUp stri
 	// 1. Create New Hash Password
 	newHashPassword, err := auth.Hash_HashPassword(PasswordUp)
 	if err != nil {
+		log.Printf("[service/update-password]: Error: %v", err.Error())
 		return false, http.StatusInternalServerError, "Internal server Error!"
 	}
 
@@ -43,6 +46,7 @@ func Service_UpdatePassword(JwtToken string, PasswordNow string, PasswordUp stri
 	dbaction := db.GetDatabase()
 	_, err = dbaction.Exec("UPDATE admin SET password = ? WHERE id = ?", newHashPassword, UserId)
 	if err != nil {
+		log.Printf("[service/update-password]: Error: %v", err.Error())
 		return false, http.StatusInternalServerError, "Internal server Error!"
 	}
 
