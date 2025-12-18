@@ -1,17 +1,17 @@
 package api
 
 import (
-	"encoding/json"
-	"io"
-	"log"
-	"net/http"
-	"strings"
-	"time"
+  "encoding/json"
+  "io"
+  "log"
+  "net/http"
+  "strings"
+  "time"
 
-	"headscale-ui.backend/internal/service"
-	"headscale-ui.backend/pkg/structure"
-	"headscale-ui.backend/pkg/handle_http"
-	"headscale-ui.backend/pkg/validator"
+  "headscale-ui.backend/internal/service"
+  "headscale-ui.backend/pkg/structure"
+  "headscale-ui.backend/pkg/handle_http"
+  "headscale-ui.backend/pkg/validator"
 )
 
 func API_NewDefaultAdmin(w http.ResponseWriter, r *http.Request) {

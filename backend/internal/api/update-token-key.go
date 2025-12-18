@@ -1,15 +1,15 @@
 package api
 
 import (
-	"encoding/json"
-	"io"
-	"log"
-	"net/http"
-	"strings"
+  "encoding/json"
+  "io"
+  "log"
+  "net/http"
+  "strings"
 
-	"headscale-ui.backend/internal/service"
-	"headscale-ui.backend/pkg/handle_http"
-	"headscale-ui.backend/pkg/structure"
+  "headscale-ui.backend/internal/service"
+  "headscale-ui.backend/pkg/handle_http"
+  "headscale-ui.backend/pkg/structure"
 )
 
 func API_UpdateTokenKey(w http.ResponseWriter, r *http.Request) {
@@ -67,7 +67,7 @@ func API_UpdateTokenKey(w http.ResponseWriter, r *http.Request) {
   dataReturn := structure.HTTP_Response_Data_Type{
     Status: http.StatusOK,
     Data: structure.HTTP_Response_ActionSucces{
-      Message: "Success update password!",
+      Message: "Success update API Key!",
       Success: isSuccess,
     },
   }

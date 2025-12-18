@@ -15,16 +15,25 @@ Headscale management with a web UI featuring a simple menu.
   - [x] New Default Admin `[POST] /side-api/new-default-admin`
   - [x] Sign In Account `[POST] /side-api/login`
   - [x] Update Password `[PATCH] /side-api/update-password`
-  - [ ] Update Token Key `[PATCH] /side-api/update-token-key`
-  - [ ] Proxy Token Key By Jsonwebtoken
-- [ ] Create Frontend (Vue.js/React.js *No plans yet*)
+  - [x] Update Token Key `[PATCH] /side-api/update-token-key`
+  - [x] Proxy Token Key By Jsonwebtoken
+- [x] Create Frontend (React.js)
+  - [ ] Setup Admin
+  - [ ] Set Token Key
+  - [ ] Login
+  - [ ] Logout
+  - [ ] Menu Settings
   - [ ] List Machine/Node
-    - [ ] Change Hostname
-    - [ ] Set Label
-    - [ ] Delete Device
-    - [ ] Set Route
+    - [ ] Get Nodes
+    - [ ] Get Node (ID)
+    - [ ] Register Node
+    - [ ] Approve Routes
+    - [ ] Rename Node
+    - [ ] Set Tags
+    - [ ] Move Node User
   - [ ] List Users
-    - [ ] Add User
+    - [ ] Create User
+    - [ ] Rename User
     - [ ] Delete User
   - [ ] Menu ACLs
     - [ ] Editor Json

@@ -1,15 +1,15 @@
 package api
 
 import (
-	"encoding/json"
-	"io"
-	"log"
-	"net/http"
+  "encoding/json"
+  "io"
+  "log"
+  "net/http"
 
-	"headscale-ui.backend/internal/service"
-	"headscale-ui.backend/pkg/handle_http"
-	"headscale-ui.backend/pkg/structure"
-	"headscale-ui.backend/pkg/validator"
+  "headscale-ui.backend/internal/service"
+  "headscale-ui.backend/pkg/handle_http"
+  "headscale-ui.backend/pkg/structure"
+  "headscale-ui.backend/pkg/validator"
 )
 
 func API_UpdatePassword(w http.ResponseWriter, r *http.Request) {

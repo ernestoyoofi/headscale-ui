@@ -1,12 +1,13 @@
 package db
 
 import (
-	"database/sql"
-	"log"
-	"os"
-	"sync"
+  "database/sql"
+  "log"
+  "os"
+  "sync"
 
-	_ "github.com/mattn/go-sqlite3"
+  // _ "github.com/mattn/go-sqlite3"
+  _ "modernc.org/sqlite"
 )
 
 type UserData struct {
@@ -27,16 +28,16 @@ func GetDatabase() (*sql.DB) {
   }
 
   once.Do(func() {
-    dbq, err := sql.Open("sqlite3", sqllocation)
+    dbq, err := sql.Open("sqlite", sqllocation)
     if err != nil {
-      log.Fatal("[sqlite.go] SQL Error:", err)
+      log.Fatal("[database] SQL Error:", err)
     }
     db = dbq
 
     // Enable Write-Ahead Logging (WAL) mode for SQLite
     _, err = db.Exec("PRAGMA journal_mode=WAL;")
     if err != nil {
-      log.Fatal("[sqlite.go] Failed to enable WAL mode:", err)
+      log.Fatal("[database] Failed to enable WAL mode:", err)
     }
   })
 
@@ -56,7 +57,7 @@ func InitDB() {
 
   _, err := db.Exec(setupTable)
   if err != nil {
-    log.Fatalf("[sqlite.go]: Error create table: %q\n", err)
+    log.Fatalf("[database]: Error create table: %q\n", err)
   }
-  log.Println("[sqlite.go]: Success setup!")
+  log.Println("[database]: Success setup!")
 }

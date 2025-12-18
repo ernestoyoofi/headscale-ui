@@ -1,10 +1,10 @@
 package handle_http
 
 import (
-	"encoding/json"
-	"net/http"
+  "encoding/json"
+  "net/http"
 
-	"headscale-ui.backend/pkg/structure"
+  "headscale-ui.backend/pkg/structure"
 )
 
 var CookieAuthAdminKey = "headscale-ui.admin"

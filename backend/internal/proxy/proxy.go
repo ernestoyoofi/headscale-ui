@@ -1,99 +1,116 @@
 package proxy
 
 import (
-	"log"
-	"net/http"
-	"net/http/httputil"
-	"net/url"
-	"os"
-	"path"
-	"strings"
+  "encoding/json"
+  "fmt"
+  "log"
+  "net/http"
+  "net/http/httputil"
+  "net/url"
+  "os"
+  "path"
+  "strings"
 
-	"headscale-ui.backend/pkg/handle_http"
+  "headscale-ui.backend/internal/auth"
+  "headscale-ui.backend/pkg/handle_http"
 )
 
 func getHeadscaleURL() *url.URL {
-	urlBase := os.Getenv("HEADSCALE_SERVER")
-	if strings.TrimSpace(urlBase) == "" {
-		urlBase = "http://localhost:8080"
-	}
-	
-	target, err := url.Parse(urlBase)
-	if err != nil {
-		log.Fatalf("[proxy]: Invalid Headscale URL: %v", err)
-	}
-	return target
+  urlBase := os.Getenv("HEADSCALE_SERVER")
+  if strings.TrimSpace(urlBase) == "" {
+    urlBase = "http://localhost:8080"
+  }
+  
+  target, err := url.Parse(urlBase)
+  if err != nil {
+    log.Fatalf("[proxy]: Invalid Headscale URL: %v", err)
+  }
+  return target
+}
+
+type HTTP_Response_ErrorProxyType struct {
+  Code    int      `json:"code"`
+  Message string   `json:"message"`
+  Details []any `json:"details"`
+}
+
+func HTTP_Response_ErrorProxy(w http.ResponseWriter, statusCode int, Message string, CodeError int, ByProxy bool) {
+  if ByProxy {
+    w.Header().Set("X-Response-By", "proxy")
+  } else {
+    w.Header().Set("X-Response-By", "headscale-api")
+  }
+  w.Header().Set("Content-Type", "application/json")
+  w.WriteHeader(statusCode)
+  errorRes := HTTP_Response_ErrorProxyType{
+    Code: statusCode,
+    Message: Message,
+    Details: []any{},
+  }
+  json.NewEncoder(w).Encode(errorRes)
 }
 
 func HTTP_Proxy_HeadscaleServer(w http.ResponseWriter, r *http.Request) {
-	var headscaleTarget = getHeadscaleURL()
-	proxy := httputil.NewSingleHostReverseProxy(headscaleTarget)
+  var headscaleTarget = getHeadscaleURL()
+  proxy := httputil.NewSingleHostReverseProxy(headscaleTarget)
 
-	originalDirector := proxy.Director
-	proxy.Director = func(req *http.Request) {
-		originalDirector(req)
+  cookieHttp, err := r.Cookie(handle_http.CookieAuthAdminKey)
+  if err != nil {
+    w.Header().Set("X-Response-By", "proxy")
+    HTTP_Response_ErrorProxy(w, http.StatusForbidden, "Unauthentication", 1, true)
+    return;
+  }
+  getApiKey, _, isError := auth.JsonWebTokenToApiKey(cookieHttp.Value)
+  if isError != nil {
+    w.Header().Set("X-Response-By", "proxy")
+    HTTP_Response_ErrorProxy(w, http.StatusBadRequest, *isError, 1, true)
+    return;
+  }
+  if getApiKey == "" {
+    w.Header().Set("X-Response-By", "proxy")
+    HTTP_Response_ErrorProxy(w, http.StatusBadRequest, "No API Key", 1, true)
+    return;
+  }
 
-		originalPath := req.URL.Path
-		req.URL.Path = path.Join("/api/v1", originalPath)
-		
-		req.Header.Del("Authorization")
-		req.Header.Del("Cookie")
-		req.Header.Set("Accept", "application/json")
-		
-		req.Host = headscaleTarget.Host
-		log.Printf("[proxy]: %s%s", req.Host, req.URL.Path)
-	}
+  originalDirector := proxy.Director
+  proxy.Director = func(req *http.Request) {
+    originalDirector(req)
 
-	proxy.ErrorHandler = func(w http.ResponseWriter, r *http.Request, err error) {
-		log.Printf("[proxy]: Error communicating with Headscale: %v", err)
-		handle_http.HTTP_Response_Error(w, http.StatusBadGateway, "Headscale Server Unreachable")
-	}
+    originalPath := req.URL.Path
+    req.URL.Path = path.Join("/api/v1", originalPath)
+    
+    req.Header.Del("Authorization")
+    req.Header.Del("Cookie")
+    req.Header.Set("Accept", "application/json")
+    req.Header.Set("Authorization", fmt.Sprintf("Bearer %s", getApiKey))
+    
+    req.Host = headscaleTarget.Host
+    log.Printf("[proxy]: %s%s", req.Host, req.URL.Path)
+  }
 
-	proxy.ServeHTTP(w, r)
+  proxy.ModifyResponse = func(resp *http.Response) error {
+    if resp.StatusCode == http.StatusUnauthorized {
+      return fmt.Errorf("headscale_unauthorization")
+    }
+    if resp.StatusCode == http.StatusNotFound {
+      return fmt.Errorf("headscale_notfound")
+    }
+    return nil
+  }
 
-	// helper.LoadEnv() // Load env (file/env os)
-	// urlBase := "http://localhost:8080"
-	// urlBaseEnv := os.Getenv("HEADSCALE_SERVER")
+  proxy.ErrorHandler = func(w http.ResponseWriter, r *http.Request, err error) {
+    log.Printf("[proxy]: Error communicating with Headscale: %v", err)
+    if err.Error() == "headscale_unauthorization" {
+      HTTP_Response_ErrorProxy(w, http.StatusForbidden, "Unauthorization, Bad API Key", 1, false)
+      return;
+    }
+    if err.Error() == "headscale_notfound" {
+      HTTP_Response_ErrorProxy(w, http.StatusNotFound, "Not Found", 5, false)
+      return;
+    }
+    HTTP_Response_ErrorProxy(w, http.StatusBadGateway, "Headscale Server Unreachable", 1, false)
+  }
 
-	// if strings.TrimSpace(urlBaseEnv) != "" {
-	// 	urlBase = strings.TrimSpace(urlBaseEnv)
-	// }
-
-	// var baseUrlInclude = urlBase+r.URL.Path
-	// req, err := http.NewRequest(r.Method, baseUrlInclude, r.Body)
-	// // Create
-	// if err != nil {
-	// 	log.Printf("[proxy]: Error during create request %s: %s\n", baseUrlInclude, err)
-	// 	handle_http.HTTP_Response_Error(w, http.StatusInternalServerError, "Internal Server Error")
-	// 	return;
-	// }
-
-	// // Copy Headers
-	// for key, values := range r.Header {
-	// 	for _, value := range values {
-	// 		req.Header.Add(key, value)
-	// 	}
-	// }
-	// req.Header.Del("Authorization") // Delete Authorization
-	// req.Header.Del("Cookie") // Delete Cookie
-	// req.Header.Set("Accept", "application/json") // Set To Json!
-
-	// // Do Request
-	// resp, err := http.DefaultClient.Do(req)
-	// if err != nil {
-	// 	log.Printf("[proxy]: Error during do request %s: %s\n", baseUrlInclude, err)
-	// 	handle_http.HTTP_Response_Error(w, http.StatusInternalServerError, "Internal Server Error")
-	// 	return;
-	// }
-	// defer resp.Body.Close()
-
-	// written, err := io.Copy(w, resp.Body)
-	// if err != nil {
-	// 	log.Printf("[proxy]: Error during copy request %s: %s\n", baseUrlInclude, err)
-	// 	handle_http.HTTP_Response_Error(w, http.StatusInternalServerError, "Internal Server Error")
-	// 	return;
-	// }
-
-
-	// return;
+  w.Header().Set("X-Response-By", "headscale-api")
+  proxy.ServeHTTP(w, r)
 }

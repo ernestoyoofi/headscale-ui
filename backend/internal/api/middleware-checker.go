@@ -1,13 +1,13 @@
 package api
 
 import (
-	"encoding/json"
-	"log"
-	"net/http"
+  "encoding/json"
+  "log"
+  "net/http"
 
-	"headscale-ui.backend/internal/service"
-	"headscale-ui.backend/pkg/handle_http"
-	"headscale-ui.backend/pkg/structure"
+  "headscale-ui.backend/internal/service"
+  "headscale-ui.backend/pkg/handle_http"
+  "headscale-ui.backend/pkg/structure"
 )
 
 func API_MiddlewareChecker(w http.ResponseWriter, r *http.Request) {
