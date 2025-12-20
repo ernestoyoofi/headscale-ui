@@ -22,6 +22,8 @@
 .env*
 
 # database
+/backend/secret
+/backend/database
 /*.db
 /*.db*
 /*.db-shm

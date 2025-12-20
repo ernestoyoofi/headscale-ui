@@ -24,3 +24,10 @@ database.db
 # env files (can opt-in for committing if needed)
 .env*
 *.env
+/secret
+/database
+
+# docker
+docker-compose.yml
+docker-dev.yml
+docker*.yml

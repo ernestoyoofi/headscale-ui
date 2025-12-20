@@ -17,6 +17,10 @@ type UserData struct {
   ApiKey    string `json:"apikey"`
   SessionId string `json:"session_id"`
 }
+type UserData_BasicLogin struct {
+  UserId    int    `json:"id"`
+  Username  string `json:"username"`
+}
 
 var db * sql.DB
 var once sync.Once
@@ -30,14 +34,14 @@ func GetDatabase() (*sql.DB) {
   once.Do(func() {
     dbq, err := sql.Open("sqlite", sqllocation)
     if err != nil {
-      log.Fatal("[database] SQL Error:", err)
+      log.Fatal("[DB] SQL Error:", err)
     }
     db = dbq
 
     // Enable Write-Ahead Logging (WAL) mode for SQLite
     _, err = db.Exec("PRAGMA journal_mode=WAL;")
     if err != nil {
-      log.Fatal("[database] Failed to enable WAL mode:", err)
+      log.Fatal("[DB] Failed to enable WAL mode:", err)
     }
   })
 
@@ -57,7 +61,7 @@ func InitDB() {
 
   _, err := db.Exec(setupTable)
   if err != nil {
-    log.Fatalf("[database]: Error create table: %q\n", err)
+    log.Fatalf("[DB]: Error create table: %q\n", err)
   }
-  log.Println("[database]: Success setup!")
+  log.Println("[DB]: Normal")
 }

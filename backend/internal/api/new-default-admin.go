@@ -51,7 +51,7 @@ func API_NewDefaultAdmin(w http.ResponseWriter, r *http.Request) {
   }
 
   // Database action!
-  jwtToken, errs := service.Service_SetupNewAccount(dataReqJson.Username, dataReqJson.Password)
+  jwtToken, redirectPage, errs := service.Service_SetupNewAccount(dataReqJson.Username, dataReqJson.Password)
   if errs != "" {
     handle_http.HTTP_Response_Error(w, http.StatusBadRequest, string(errs))
     return
@@ -66,6 +66,10 @@ func API_NewDefaultAdmin(w http.ResponseWriter, r *http.Request) {
     HttpOnly: true,
   }
   http.SetCookie(w, cookieData)
+
+  if redirectPage != "" {
+    w.Header().Set("X-Redirect-App", "location:"+redirectPage)
+  }
   
   // Set Response
   dataResponse := structure.HTTP_Response_Data_Type{

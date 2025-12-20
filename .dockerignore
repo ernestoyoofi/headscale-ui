@@ -1,5 +1,10 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
+# Basic Root
+/README.md
+/autorun.multiplatform.sh
+/.gitignore
+
 # production
 /backend/build
 /backend/binary
@@ -23,6 +28,8 @@
 # env files (can opt-in for committing if needed)
 /backend/.env*
 /backend/*.env
+/backend/secret
+/backend/database
 
 # Logs
 /frontend/logs

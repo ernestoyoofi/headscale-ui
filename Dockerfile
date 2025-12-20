@@ -23,7 +23,8 @@ FROM alpine AS base_headscaleui
 WORKDIR /app
 
 ENV DIST_FRONTEND=/app/html
-ENV SQLITE_LOCATION=/app/database.db
+ENV UNJWT_SECRET=/app/secret/jwt-token
+ENV SQLITE_LOCATION=/app/database/database.db
 ENV NODE_ENV=production
 ENV APP_MODE=production
 

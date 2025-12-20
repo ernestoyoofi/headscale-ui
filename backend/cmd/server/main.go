@@ -11,6 +11,7 @@ import (
   "headscale-ui.backend/internal/proxy"
   "headscale-ui.backend/pkg/db"
   "headscale-ui.backend/pkg/helper"
+  "headscale-ui.backend/pkg/setup"
 )
 
 func EnableCORS(next http.Handler) http.Handler {
@@ -27,14 +28,28 @@ func EnableCORS(next http.Handler) http.Handler {
   }))
 }
 
+func CreateDirectory(dir string) {
+  directory := filepath.Dir(dir)
+  log.Printf("[\x1b[33mServer\x1b[0m]: Check directory... (*dir):%s\n", directory)
+  if _, err := os.Stat(directory); os.IsNotExist(err) {
+    log.Printf("[\x1b[33mServer\x1b[0m]: Make directory... (*dir):%s\n", directory)
+    err := os.MkdirAll(directory, os.ModePerm)
+    if err != nil {
+      log.Fatal("[\x1b[31mServer\x1b[0m]: Error, Bad Create Folder", err)
+    }
+  }
+  log.Printf("[\x1b[32mServer\x1b[0m]: Finish Check (*dir):%s\n", directory)
+}
+
 func main() {
-  // System Load
+  // Load Environment
   helper.LoadEnv()
-  db.InitDB()
 
   // Default Environment
   addrlisten := ":3050"
-  staticdist := "/app/html_web"
+  staticdist := "/var/www/html"
+  sqldbdir := "/root/database/database.db"
+  unjwttoken := "/root/secret/jwt-token"
   prodbuild := false
 
   // Environment
@@ -47,12 +62,26 @@ func main() {
   if os.Getenv("DIST_FRONTEND") != "" {
     staticdist = os.Getenv("DIST_FRONTEND")
   }
+  if os.Getenv("SQLITE_LOCATION") != "" {
+    sqldbdir = os.Getenv("SQLITE_LOCATION")
+  }
+  if os.Getenv("UNJWT_SECRET") != "" {
+    unjwttoken = os.Getenv("UNJWT_SECRET")
+  }
+
+  // Setup Directory
+  CreateDirectory(sqldbdir)
+  CreateDirectory(unjwttoken)
+
+  // Database & JWT Setup
+  db.InitDB()
+  setup.GenerateJwtToken()
 
   // Static File HTTP
   statichttpfile := http.FileServer(http.Dir(staticdist))
   // Single Page Application Handle
   spaHandler := http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-    log.Printf("[Server]: [%s] %s\n", r.Method, r.URL.Path)
+    log.Printf("[\x1b[33mServer\x1b[0m]: [%s] %s\n", r.Method, r.URL.Path)
     path := filepath.Join(staticdist, r.URL.Path)
     info, err := os.Stat(path)
     if os.IsNotExist(err) || (err == nil && info.IsDir()) {
@@ -80,7 +109,7 @@ func main() {
   )
 
   // Running
-  log.Printf("[Server]: Running at port http://%v\n", addrlisten)
+  log.Printf("[\x1b[33mServer\x1b[0m]: Running at port http://%v\n", addrlisten)
   if prodbuild {
     http.ListenAndServe(addrlisten, nil)
     } else {

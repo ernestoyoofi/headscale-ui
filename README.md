@@ -18,10 +18,11 @@ Headscale management with a web UI featuring a simple menu.
   - [x] Update Token Key `[PATCH] /side-api/update-token-key`
   - [x] Proxy Token Key By Jsonwebtoken
 - [x] Create Frontend (React.js)
-  - [ ] Setup Admin
+  - [X] Setup Admin
+  - [ ] Setup Middleware
   - [ ] Set Token Key
-  - [ ] Login
-  - [ ] Logout
+  - [X] Login
+  - [ ] Logout (Next Version)
   - [ ] Menu Settings
   - [ ] List Machine/Node
     - [ ] Get Nodes
@@ -30,7 +31,6 @@ Headscale management with a web UI featuring a simple menu.
     - [ ] Approve Routes
     - [ ] Rename Node
     - [ ] Set Tags
-    - [ ] Move Node User
   - [ ] List Users
     - [ ] Create User
     - [ ] Rename User

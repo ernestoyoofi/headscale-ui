@@ -19,6 +19,8 @@ database.db
 *.db*
 *.db-wal
 *.db-shm
+/secret
+/database
 
 # env files (can opt-in for committing if needed)
 .env*

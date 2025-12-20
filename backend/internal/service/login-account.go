@@ -1,7 +1,6 @@
 package service
 
 import (
-  "fmt"
   "log"
 
   "headscale-ui.backend/pkg/auth"
@@ -47,8 +46,6 @@ func Service_LoginAccount(Username string, Password string) (JwtToken *string, R
   // Generate new session
   idGen := helper.GenerateID(16)
   genStr := "session-" + idGen
-
-  fmt.Println("update! session:", genStr)
 
   _, err = dbaction.Exec("UPDATE admin SET session_id = ? WHERE id = ?;", genStr, userRowsData.UserId)
   if err != nil {
