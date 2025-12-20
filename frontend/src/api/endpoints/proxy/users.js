@@ -7,11 +7,15 @@ export async function proxyNewDefaultAdmin(username = "", password = "") {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request?.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request?.headers || {},
     data: {
       token: String(request?.data?.token||""),
       success: true
@@ -19,18 +23,22 @@ export async function proxyNewDefaultAdmin(username = "", password = "") {
   }
 }
 
-export async function proxyLogin() {
+export async function proxyLogin(username = "", password = "") {
   const request = await FetchData("/api/backend/login", {
     method: "POST", data: { username, password }
   })
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request?.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request?.headers || {},
     data: {
       token: String(request?.data?.token||""),
       success: true
@@ -45,11 +53,15 @@ export async function proxyUpdateTokenkey(apikey = "") {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request?.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request?.headers || {},
     data: {
       type: "update-token-key",
       token: String(request?.data?.token||""),
@@ -58,18 +70,22 @@ export async function proxyUpdateTokenkey(apikey = "") {
   }
 }
 
-export async function proxyUpdateTokenkey(password_old = "", password_new = "", password_confrim = "") {
+export async function proxyUpdatePassword(password_old = "", password_new = "", password_confrim = "") {
   const request = await FetchData("/api/backend/update-password", {
     method: "PATCH", data: { password_old, password_new, password_confrim }
   })
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request?.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request?.headers || {},
     data: {
       type: "update-password",
       token: String(request?.data?.token||""),

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans+Code:ital,wght@0,300..800;1,300..800&family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&family=Noto+Sans+JP:wght@100..900&display=swap');
+
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -45,6 +47,8 @@
 }
 
 :root {
+  --font-sans: "Google Sans", sans-serif;
+  --font-mono: "Google Sans Code", monospace;
   --radius: 0.625rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.145 0 0);
@@ -120,4 +124,12 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+* {
+  font-family: var(font-sans);
+}
+
+code, pre {
+  font-family: var(font-mono);
 }

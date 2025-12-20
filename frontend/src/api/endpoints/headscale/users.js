@@ -15,11 +15,15 @@ export async function getUsers(id = "", name = "", email = "") {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: {
       list: (request.data.users||[])
     }
@@ -33,11 +37,15 @@ export async function createUser(username = "", email = "", displayName = "", pi
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: {
       type: "create-user",
       success: true
@@ -52,11 +60,15 @@ export async function deleteUser(id = "") {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: {
       type: "delete-user",
       success: true
@@ -71,11 +83,15 @@ export async function renameUser(id = "", newName = "") {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: {
       type: "rename-user",
       success: true

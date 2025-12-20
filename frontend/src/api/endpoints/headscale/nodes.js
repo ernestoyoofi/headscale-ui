@@ -5,11 +5,15 @@ export async function getNodes() {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: {
       list: (request.data.nodes||[])
     }
@@ -21,11 +25,15 @@ export async function getNode(id = "") {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: (request.data.node||{})
   }
 }
@@ -37,11 +45,15 @@ export async function deleteNode(id = "") {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: {
       type: "delete-node",
       success: true,
@@ -59,11 +71,15 @@ export async function registerNode(user = "", key = "") {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: {
       type: "register-node",
       success: true,
@@ -78,11 +94,15 @@ export async function approveNodeRoutes(id = "", routes = []) {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: {
       type: "approve-node",
       success: true,
@@ -97,11 +117,15 @@ export async function expireNode(id = "") {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: {
       type: "expire-node",
       success: true,
@@ -116,11 +140,15 @@ export async function renameNode(id = "", newName = "") {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: {
       type: "rename-node",
       success: true,
@@ -135,11 +163,15 @@ export async function setNodeTags(id = "", tags = []) {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: {
       type: "settag-node",
       success: true,
@@ -147,21 +179,24 @@ export async function setNodeTags(id = "", tags = []) {
   }
 }
 
-export async function moveNodeUser(id = "", user = "") {
-  const request = await FetchData(`/api/v1/node/${id}/user`, {
-    method: "POST", data: { user }
-  })
-  if(request.status !== 200) {
-    return {
-      isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
-    }
-  }
-  return {
-    isError: false,
-    data: {
-      type: "setuser-node",
-      success: true,
-    }
-  }
-}
+// Remove Feature Move Node
+// See More : https://github.com/juanfont/headscale/pull/2922
+
+// export async function moveNodeUser(id = "", user = "") {
+//   const request = await FetchData(`/api/v1/node/${id}/user`, {
+//     method: "POST", data: { user }
+//   })
+//   if(request.status !== 200) {
+//     return {
+//       isError: true,
+//       message: (request?.data?.message||request?.statusText||"Unknowing")
+//     }
+//   }
+//   return {
+//     isError: false,
+//     data: {
+//       type: "setuser-node",
+//       success: true,
+//     }
+//   }
+// }

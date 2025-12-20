@@ -5,11 +5,15 @@ export async function proxyGetMiddleware() {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request?.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request?.headers || {},
     data: (request?.data?.data||{})
   }
 }

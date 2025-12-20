@@ -5,11 +5,15 @@ export async function getPolicy() {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: {
       policy: request.data?.policy||"{}",
 			updatedAt: request.data?.updatedAt !== null ? new Date(request.data?.updatedAt) : null,
@@ -24,11 +28,15 @@ export async function setPolicy(policy = "") {
   if(request.status !== 200) {
     return {
       isError: true,
-      message: (request?.data?.message||request?.statusText||"Unknowing")
+      headers: request.headers || {},
+      data: {
+        message: (request?.data?.message||request?.statusText||"Unknowing")
+      }
     }
   }
   return {
     isError: false,
+    headers: request.headers || {},
     data: {
       policy: request.data?.policy||"{}",
 			updatedAt: new Date(request.data?.updatedAt||""),
