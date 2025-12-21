@@ -6,6 +6,7 @@ export async function getNodes() {
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -14,6 +15,7 @@ export async function getNodes() {
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: {
       list: (request.data.nodes||[])
     }
@@ -26,6 +28,7 @@ export async function getNode(id = "") {
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -34,6 +37,7 @@ export async function getNode(id = "") {
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: (request.data.node||{})
   }
 }
@@ -46,6 +50,7 @@ export async function deleteNode(id = "") {
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -54,6 +59,7 @@ export async function deleteNode(id = "") {
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: {
       type: "delete-node",
       success: true,
@@ -72,6 +78,7 @@ export async function registerNode(user = "", key = "") {
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -80,6 +87,7 @@ export async function registerNode(user = "", key = "") {
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: {
       type: "register-node",
       success: true,
@@ -95,6 +103,7 @@ export async function approveNodeRoutes(id = "", routes = []) {
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -103,6 +112,7 @@ export async function approveNodeRoutes(id = "", routes = []) {
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: {
       type: "approve-node",
       success: true,
@@ -118,6 +128,7 @@ export async function expireNode(id = "") {
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -126,6 +137,7 @@ export async function expireNode(id = "") {
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: {
       type: "expire-node",
       success: true,
@@ -141,6 +153,7 @@ export async function renameNode(id = "", newName = "") {
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -149,6 +162,7 @@ export async function renameNode(id = "", newName = "") {
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: {
       type: "rename-node",
       success: true,
@@ -164,6 +178,7 @@ export async function setNodeTags(id = "", tags = []) {
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -172,6 +187,7 @@ export async function setNodeTags(id = "", tags = []) {
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: {
       type: "settag-node",
       success: true,

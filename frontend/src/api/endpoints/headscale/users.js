@@ -16,6 +16,7 @@ export async function getUsers(id = "", name = "", email = "") {
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -24,6 +25,7 @@ export async function getUsers(id = "", name = "", email = "") {
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: {
       list: (request.data.users||[])
     }
@@ -38,6 +40,7 @@ export async function createUser(username = "", email = "", displayName = "", pi
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -46,6 +49,7 @@ export async function createUser(username = "", email = "", displayName = "", pi
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: {
       type: "create-user",
       success: true
@@ -61,6 +65,7 @@ export async function deleteUser(id = "") {
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -69,6 +74,7 @@ export async function deleteUser(id = "") {
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: {
       type: "delete-user",
       success: true
@@ -84,6 +90,7 @@ export async function renameUser(id = "", newName = "") {
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -92,6 +99,7 @@ export async function renameUser(id = "", newName = "") {
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: {
       type: "rename-user",
       success: true

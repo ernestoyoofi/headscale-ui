@@ -4,22 +4,14 @@ import { useRoutes } from "react-router-dom"
 import { Toaster } from "sonner"
 import routes from "~react-pages"
 import Middleware_All from "./components/meta/Middleware-All"
-
-function ErrorFallback({ error, resetErrorBoundary }) {
-  return <>
-    <div>
-      <h1>Something went wrong!</h1>
-      <pre>{error.message}</pre>
-      <button onClick={resetErrorBoundary}>Try again</button>
-    </div>
-  </>
-}
+import SideClientIssue from "./components/layout/SideClientIssue"
+import LoadingMiddleware from "./components/layout/LoadingMiddlware"
 
 export default function AppRoot() {
   return <>
     <Toaster richColors/>
-    <ErrorBoundary FallbackComponent={ErrorFallback}>
-      <Suspense fallback={<></>}>
+    <ErrorBoundary FallbackComponent={SideClientIssue}>
+      <Suspense fallback={<LoadingMiddleware />}>
         <Middleware_All>
           {useRoutes(routes)}
         </Middleware_All>

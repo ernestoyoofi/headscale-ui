@@ -8,6 +8,7 @@ export async function proxyNewDefaultAdmin(username = "", password = "") {
     return {
       isError: true,
       headers: request?.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -16,6 +17,7 @@ export async function proxyNewDefaultAdmin(username = "", password = "") {
   return {
     isError: false,
     headers: request?.headers || {},
+    status: request.status || 0,
     data: {
       token: String(request?.data?.token||""),
       success: true
@@ -31,6 +33,7 @@ export async function proxyLogin(username = "", password = "") {
     return {
       isError: true,
       headers: request?.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -39,6 +42,7 @@ export async function proxyLogin(username = "", password = "") {
   return {
     isError: false,
     headers: request?.headers || {},
+    status: request.status || 0,
     data: {
       token: String(request?.data?.token||""),
       success: true
@@ -54,6 +58,7 @@ export async function proxyUpdateTokenkey(apikey = "") {
     return {
       isError: true,
       headers: request?.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -62,6 +67,7 @@ export async function proxyUpdateTokenkey(apikey = "") {
   return {
     isError: false,
     headers: request?.headers || {},
+    status: request.status || 0,
     data: {
       type: "update-token-key",
       token: String(request?.data?.token||""),
@@ -78,6 +84,7 @@ export async function proxyUpdatePassword(password_old = "", password_new = "", 
     return {
       isError: true,
       headers: request?.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -86,6 +93,7 @@ export async function proxyUpdatePassword(password_old = "", password_new = "", 
   return {
     isError: false,
     headers: request?.headers || {},
+    status: request.status || 0,
     data: {
       type: "update-password",
       token: String(request?.data?.token||""),

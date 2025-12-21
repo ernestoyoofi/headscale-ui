@@ -68,7 +68,7 @@ func HTTP_Proxy_HeadscaleServer(w http.ResponseWriter, r *http.Request) {
   }
   if getApiKey == "" {
     w.Header().Set("X-Response-By", "proxy")
-    HTTP_Response_ErrorProxy(w, http.StatusBadRequest, "No API Key", 1, true)
+    HTTP_Response_ErrorProxy(w, http.StatusForbidden, "No API Key", 1, true)
     return;
   }
 

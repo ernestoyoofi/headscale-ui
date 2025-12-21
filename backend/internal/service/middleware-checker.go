@@ -61,8 +61,6 @@ func Service_MiddlewareCheck(JwtToken string) (username string, setupAccount boo
       return "", dataHasSetup, false, false, true
     }
 
-    log.Println("KEY Data:", SelectData.ApiKey)
-
     dataUsername = "@"+SelectData.Username
     dataIsLogin  = true
     dataHaveKeyAPI = bool(SelectData.ApiKey != "")

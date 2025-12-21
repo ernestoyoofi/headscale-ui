@@ -2,7 +2,7 @@ import axios from "axios"
 
 export const baseUrlAPI = "/"
 
-export async function FetchData(path, { method = "GET", data = {}, headers = {}, ...others }) {
+export async function FetchData(path, { method = "GET", data = {}, headers = {}, ...others } = {}) {
   try {
     const base = axios.create({ baseURL: baseUrlAPI })
     const request = await base.request({

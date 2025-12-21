@@ -6,6 +6,7 @@ export async function getPolicy() {
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -14,6 +15,7 @@ export async function getPolicy() {
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: {
       policy: request.data?.policy||"{}",
 			updatedAt: request.data?.updatedAt !== null ? new Date(request.data?.updatedAt) : null,
@@ -29,6 +31,7 @@ export async function setPolicy(policy = "") {
     return {
       isError: true,
       headers: request.headers || {},
+      status: request.status || 0,
       data: {
         message: (request?.data?.message||request?.statusText||"Unknowing")
       }
@@ -37,6 +40,7 @@ export async function setPolicy(policy = "") {
   return {
     isError: false,
     headers: request.headers || {},
+    status: request.status || 0,
     data: {
       policy: request.data?.policy||"{}",
 			updatedAt: new Date(request.data?.updatedAt||""),
