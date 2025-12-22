@@ -1,11 +1,82 @@
 # Headscale UI
 
-Headscale management with a web UI featuring a simple menu.
+> [!IMPORTANT]
+> **Work in Progress:** This project is currently under active development. Some features may be unstable or incomplete.
+
+A lightweight web interface for managing your [Headscale](https://github.com/juanfont/headscale) server, built with Go (Backend) and React (Frontend). It acts as a secure proxy to the Headscale API.
+
+## ✨ Features
+
+- **Node Management**: List, register, remove, and rename nodes. Support for approving subnets/routes.
+- **User Control**: Easily create, rename, and manage users (namespaces).
+- **Access Control (ACL)**: Built-in JSON editor to limit and control device access within your tailnet.
+- **Secure Backend**: Simple authentication and JWT-based proxying to keep your Headscale API key safe.
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Docker & Docker Compose
+- An existing Headscale server and an API Key
+
+### Installation via Docker
+
+The easiest way to deploy Headscale UI is using Docker:
+
+```bash
+docker run -d \
+  --name headscale-ui \
+  -p 3050:3050 \
+  -e HEADSCALE_URL="https://your-headscale-domain.com" \
+  -e HEADSCALE_API_KEY="your-api-key-here" \
+  -e SERVER_LISTEN=":3050" \
+  ernestoyoofi/headscale-ui:latest
+```
+
+### Docker Compose Setup
+
+1. Add the headscale-ui service to your existing docker-compose.yml. You can see a full example [here.](https://github.com/tkjskanesga/headscale-config/blob/main/docker-compose-run.yml)
+
+   ```yml
+   headscale_ui:
+    image: ernestoyoofi/headscale-ui:latest
+    container_name: headscale-ui
+    restart: unless-stopped
+    networks:
+      - headscale
+    volumes:
+      - ${PWD}/headscale-ui/database:/app/database
+      - ${PWD}/headscale-ui/secret:/app/secret
+    environment:
+      - JWT_SECRET="PleaseAddYourSecretJwtToken" # Jwt Token
+      - SERVER_LISTEN=":3050" # Server Listening
+      - HEADSCALE_SERVER="headscale:8080" # Headscale Service Network
+    labels:
+      # If Usage Traefik Proxy
+      - "traefik.enable=true"
+      - "traefik.http.routers.headscale-ui.rule=Host(`login.tailscale.yourdomain.com`)"
+      - "traefik.http.routers.headscale-ui.entrypoints=websecure"
+      - "traefik.http.routers.headscale-ui.tls.certresolver=cloudflare"
+      - "traefik.http.services.headscale-ui.loadbalancer.server.port=3050"
+   ```
+
+2. Run `docker-compose up -d.`
+3. Access the dashboard via your configured domain or IP.
+4. On the first run, set up your Admin Account (Username & Password).
+5. Input your Headscale API Key in the settings menu to start managing your network.
+
+## ⚙️ Environment / Configuration
+
+| Variable | Description | Requirement |
+| -------- | ----------- | ----------- |
+| `JWT_SECRET` | Secret key for signing JSON Web Tokens | Optional (Recommended) |
+| `SERVER_LISTEN` | The address and port the UI listens on (e.g., `:3050`) | **Required** |
+| `HEADSCALE_SERVER` | Address of your Headscale API (e.g., `headscale:8080`) | **Required** |
 
 > [!IMPORTANT]
-> Currently in progress...
+> **Work in Progress:** This project is currently under active development. Some features may be unstable or incomplete.
 
-## Tasks
+## 🛠 Development Roadmap
 
 - [x] Create Backend for proxy (With Golang)
   - [x] Create Base All Database (SQLite)
@@ -36,3 +107,17 @@ Headscale management with a web UI featuring a simple menu.
     - [x] Delete User
   - [x] Menu ACLs
     - [x] Editor Json
+
+## 🤝 Contributing
+
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page.](https://github.com/ernestoyoofi/headscale-ui/issues)
+
+1. Fork the Project
+2. Create your Feature Branch `(git checkout -b feature/AmazingFeature)`
+3. Commit your Changes `(git commit -m 'Add some AmazingFeature')`
+4. Push to the Branch `(git push origin feature/AmazingFeature)`
+5. Open a Pull Request
+
+## 📄 License
+
+Distributed under the **Apache 2.0**. See [LICENSE for more information](./LICENSE).
