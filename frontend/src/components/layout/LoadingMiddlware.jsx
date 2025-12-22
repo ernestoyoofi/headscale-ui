@@ -7,7 +7,8 @@ export default function LoadingMiddleware({ className = "" }) {
     className
   )}>
     <div className="scale-50">
-      <OrbitProgress variant="disc" dense color="#1073ff" size="small"/>
+      <OrbitProgress variant="disc" dense color="#2e2e2e" size="small"/>
+      {/* <OrbitProgress variant="disc" dense color="#1073ff" size="small"/> */}
     </div>
     <p className="text-base font-semibold -ml-0.5">Loading App...</p>
   </div>

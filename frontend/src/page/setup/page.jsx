@@ -2,11 +2,11 @@ import { Input } from "../../components/ui/input"
 import { Button } from "../../components/ui/button"
 import { Alert, AlertDescription, AlertTitle } from "../../components/ui/alert"
 import { useForm } from "react-hook-form"
-import apiAction from "../../api/index"
 import { toast } from "sonner"
 import { useNavigate } from "react-router"
 import { useState, useRef } from "react"
 import { InfoIcon } from "lucide-react"
+import apiAction from "../../api/index"
 
 function Page_RegisterNewAdmin({ handleForm, isLoading = false }) {
   const { register, handleSubmit, formState: { errors } } = useForm()
@@ -83,7 +83,7 @@ function Page_SetApiKeyHeadscale({ handleForm, skipPage, isLoading = false }) {
         <span className="mb-1.5 w-full block text-neutral-600 text-sm">API Key</span>
         <Input
           placeholder="Enter headscale API Key"
-          type="text"
+          type="password"
           {...register("apikey", { required: true, min: 2 })}
         />
         {errors.apikey && <span className="w-full block mt-1.5 text-red-500 text-sm font-semibold">API Key is required!</span>}

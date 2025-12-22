@@ -2,6 +2,7 @@ import { KeyIcon, LockIcon, MenuIcon, ServerIcon, SettingsIcon, UsersIcon, XIcon
 import { Link } from "react-router"
 import { cn } from "../../lib/utils"
 import { useState } from "react"
+import Footer from "./Footer"
 
 const linkList = [
   { href: "/admin/nodes", label: "Nodes", icon: <ServerIcon size={19}/> },
@@ -41,7 +42,7 @@ export default function Sidebar_Admin({ children, pathNow = "/admin/" }) {
         ))}
       </div>
     </nav>
-    <header className="w-full bg-gray-100 border-b border-gray-200">
+    <header className="sticky top-0 left-0 w-full bg-gray-100 border-b border-gray-200 z-50">
       <div className="w-full max-w-4xl m-auto flex items-center p-2.5 py-2.5">
         <button className="w-10 h-10 duration-150 flex items-center justify-center cursor-pointer hover:bg-neutral-200 rounded-md" onClick={() => { setOpenSidebar(true) }}>
           <MenuIcon size={20}/>
@@ -49,10 +50,11 @@ export default function Sidebar_Admin({ children, pathNow = "/admin/" }) {
         <b className="ml-1.5">Headscale UI</b>
       </div>
     </header>
-    <main className="w-full">
+    <main className="w-full pt-3 px-2.5 min-h-[calc(100dvh-112px)] sm:min-h-[calc(100dvh-100px)]">
       <div className="w-full max-w-4xl m-auto">
         {children}
       </div>
     </main>
+    <Footer />
   </>
 }

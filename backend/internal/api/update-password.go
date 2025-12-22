@@ -60,13 +60,13 @@ func API_UpdatePassword(w http.ResponseWriter, r *http.Request) {
     handle_http.HTTP_Response_Error(w, http.StatusBadRequest, "Fill your input and format \"password_new\" is A-Za-z0-9._#@")
     return
   }
-  if !validator.IsValidPasswordFormat(dataReqJson.PasswordConfrim) {
+  if !validator.IsValidPasswordFormat(dataReqJson.PasswordConfirm) {
     handle_http.HTTP_Response_Error(w, http.StatusBadRequest, "Fill your input and format \"password_confrim\" is A-Za-z0-9._#@")
     return
   }
 
   // Database action!
-  isSuccess, StatusCode, errs := service.Service_UpdatePassword(valueCookie, dataReqJson.PasswordOld, dataReqJson.PasswordNew, dataReqJson.PasswordConfrim)
+  isSuccess, StatusCode, errs := service.Service_UpdatePassword(valueCookie, dataReqJson.PasswordOld, dataReqJson.PasswordNew, dataReqJson.PasswordConfirm)
   if errs != "" {
     handle_http.HTTP_Response_Error(w, StatusCode, errs)
     return

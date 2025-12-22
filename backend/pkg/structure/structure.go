@@ -18,7 +18,7 @@ type HTTP_Request_LoginAccount struct {
 type HTTP_Request_UpdatePassword struct {
   PasswordOld     string `json:"password_old"`
   PasswordNew     string `json:"password_new"`
-  PasswordConfrim string `json:"password_confrim"`
+  PasswordConfirm string `json:"password_confirm"`
 }
 type HTTP_Request_UpdateTokenKey struct {
   TokenKey    string `json:"apikey"`

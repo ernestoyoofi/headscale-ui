@@ -9,7 +9,7 @@ import (
   "headscale-ui.backend/pkg/db"
 )
 
-func Service_UpdatePassword(JwtToken string, PasswordNow string, PasswordUp string, PasswordConfrim string) (SuccessData bool, StatusCode int, ResError string) {
+func Service_UpdatePassword(JwtToken string, PasswordNow string, PasswordUp string, PasswordConfirm string) (SuccessData bool, StatusCode int, ResError string) {
   // Is Auth Login
   UserId, _, _, authPasswordHash, CodeStatus, errs := action.IsLogin(JwtToken)
   if errs != nil {
@@ -30,7 +30,7 @@ func Service_UpdatePassword(JwtToken string, PasswordNow string, PasswordUp stri
   }
 
   // Is Match with Up and Confrim?
-  if PasswordUp != PasswordConfrim {
+  if PasswordUp != PasswordConfirm {
     return false, http.StatusBadRequest, "The confirmation password does not match the new password!"
   }
 

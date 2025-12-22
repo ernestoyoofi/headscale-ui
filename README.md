@@ -7,7 +7,7 @@ Headscale management with a web UI featuring a simple menu.
 
 ## Tasks
 
-- [ ] Create Backend for proxy (With Golang)
+- [x] Create Backend for proxy (With Golang)
   - [x] Create Base All Database (SQLite)
   - [x] Setup HTTP
   - [x] Health Check /health
@@ -19,21 +19,20 @@ Headscale management with a web UI featuring a simple menu.
   - [x] Proxy Token Key By Jsonwebtoken
 - [x] Create Frontend (React.js)
   - [X] Setup Admin
-  - [ ] Setup Middleware
-  - [ ] Set Token Key
+  - [x] Setup Middleware
+  - [x] Set Token Key
   - [X] Login
-  - [ ] Logout (Next Version)
-  - [ ] Menu Settings
-  - [ ] List Machine/Node
+  - [x] Menu Settings
+  - [x] List Machine/Node
     - [ ] Get Nodes
     - [ ] Get Node (ID)
     - [ ] Register Node
     - [ ] Approve Routes
     - [ ] Rename Node
     - [ ] Set Tags
-  - [ ] List Users
-    - [ ] Create User
-    - [ ] Rename User
-    - [ ] Delete User
-  - [ ] Menu ACLs
-    - [ ] Editor Json
+  - [x] List Users
+    - [x] Create User
+    - [x] Rename User
+    - [x] Delete User
+  - [x] Menu ACLs
+    - [x] Editor Json

@@ -34,14 +34,14 @@ func GetDatabase() (*sql.DB) {
   once.Do(func() {
     dbq, err := sql.Open("sqlite", sqllocation)
     if err != nil {
-      log.Fatal("[DB] SQL Error:", err)
+      log.Fatal("[Database]: SQL Error:", err)
     }
     db = dbq
 
     // Enable Write-Ahead Logging (WAL) mode for SQLite
     _, err = db.Exec("PRAGMA journal_mode=WAL;")
     if err != nil {
-      log.Fatal("[DB] Failed to enable WAL mode:", err)
+      log.Fatal("[Database]: Failed to enable WAL mode:", err)
     }
   })
 
@@ -61,7 +61,7 @@ func InitDB() {
 
   _, err := db.Exec(setupTable)
   if err != nil {
-    log.Fatalf("[DB]: Error create table: %q\n", err)
+    log.Fatalf("[Database]: Error create table: %q\n", err)
   }
-  log.Println("[DB]: Normal")
+  log.Println("[Database]: Normal")
 }
