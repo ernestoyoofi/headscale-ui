@@ -12,12 +12,21 @@ A lightweight web interface for managing your [Headscale](https://github.com/jua
 - **Access Control (ACL)**: Built-in JSON editor to limit and control device access within your tailnet.
 - **Secure Backend**: Simple authentication and JWT-based proxying to keep your Headscale API key safe.
 
+## ⚠️ Limitations
+
+While this UI covers most daily operations, please keep the following in mind:
+
+- **CLI/File Access Required**: Certain advanced configurations, such as **DNS** and **Base Domain** settings, cannot be managed via the Headscale API yet. You will still need access to the server's CLI or configuration files for these tasks.
+- **Docker-First Design**: This project is optimized for **Docker environments**. Running it directly on a host machine is not officially supported or recommended at this time.
+
 ## 🚀 Getting Started
 
 ### Prerequisites
 
-- Docker & Docker Compose
-- An existing Headscale server and an API Key
+- A Linux server.
+- Docker & Docker Compose.
+- An existing Headscale server and an API Key.
+- Golang, Nodejs/Bun, C Compailer (If running on host machine)
 
 ### Installation via Docker
 
@@ -32,6 +41,98 @@ docker run -d \
   -e SERVER_LISTEN=":3050" \
   ernestoyoofi/headscale-ui:latest
 ```
+
+> [!WARNING]
+> This project is optimized for Docker. Running it directly on a host machine is possible using the method below, but it is **not recommended** for production environments.
+
+### Host Environment (Not Recommend)
+
+1. Clone the Repository
+
+   ```bash
+   git clone https://github.com/ernestoyoofi/headscale-ui.git
+   cd headscale-ui
+   ```
+
+   You need a golang, bun/nodejs and C to build this.
+
+2. Build the Backend.
+
+   ```bash
+   cd backend
+   go build -o headscaleui-host ./cmd/server
+   chmod +x ./headscaleui-host
+   sudo cp ./headscaleui-host /usr/local/bin/headscale-ui
+   cd ..
+   ```
+
+3. Build the frontend.
+
+   Using Node.js/NPM:
+
+   ```bash
+   cd frontend
+   npm install
+   npm run build
+   sudo mkdir -p /root/headscale-ui/app/
+   sudo mkdir -p /var/www/headscale-ui
+   sudo cp -r ./dist/* /var/www/headscale-ui/
+   rm -r ./dist
+   cd ..
+   ```
+
+   Using Bun:
+
+   ```bash
+   cd frontend
+   bun install
+   bun run build
+   sudo mkdir -p /root/headscale-ui/app/
+   sudo mkdir -p /var/www/headscale-ui
+   sudo cp -r ./dist/* /var/www/headscale-ui/
+   rm -r ./dist
+   cd ..
+   ```
+
+4. Systemd Service Configuration
+
+   Create a service file at `/etc/systemd/system/headscale-ui.service`:
+
+   ```text
+   [Unit]
+   Description=Headscale UI Service
+   After=network.target
+   
+   [Service]
+   Type=simple
+   User=root
+   WorkingDirectory=/var/lib/headscale-ui
+   ExecStart=/usr/local/bin/headscale-ui
+   Restart=on-failure
+   RestartSec=2s
+   
+   # Environment Configurations
+   Environment=SQLITE_LOCATION=/var/lib/headscale-ui/database.db
+   Environment=UNJWT_SECRET=/var/lib/headscale-ui/jwt-token
+   Environment=DIST_FRONTEND=/var/www/headscale-ui
+   Environment=HEADSCALE_SERVER=http://localhost:8080
+   Environment=SERVER_LISTEN=:3050
+   
+   [Install]
+   WantedBy=multi-user.target
+   ```
+
+5. Enable and Start Service
+  
+   ```bash
+   sudo mkdir -p /var/lib/headscale-ui
+   sudo systemctl daemon-reload
+   sudo systemctl enable --now headscale-ui
+   ```
+
+6. Access the dashboard via your IP or domain (Port 3050).
+7. Complete the Admin Account setup on the first run.
+8. Input your Headscale API Key in the settings menu.
 
 ### Docker Compose Setup
 
