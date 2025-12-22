@@ -28,7 +28,8 @@ ENV SQLITE_LOCATION=/app/database/database.db
 ENV NODE_ENV=production
 ENV APP_MODE=production
 
-COPY --from=build_frontend /app/frontend/ /app/html
+COPY --from=build_frontend /app/frontend/dist/ /app/html
+COPY --from=build_frontend /app/frontend/public/ /app/html
 COPY --from=build_backend /app/backend/serverbin /app/server
 
 EXPOSE 3050
