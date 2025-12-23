@@ -72,7 +72,10 @@ export async function registerNode(user = "", key = "") {
   query.append("key", String(key))
   query.append("user", String(user))
   const request = await FetchData(`/api/v1/node/register?${query.toString()}`, {
-    method: "POST", data: { user, key }
+    method: "POST", data: String(query),
+    headers: {
+      "Content-Type": "application/x-www-form-urlencoded"
+    }
   })
   if(request.status !== 200) {
     return {

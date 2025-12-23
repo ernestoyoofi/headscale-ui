@@ -36,16 +36,28 @@ export function timeAgo(date) {
 
 export function formatDate(dateprm) {
   const date = new Date(dateprm)
-  const hari = [
+  const dayStr = [
     "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
   ]
-  const bulan = [
+  const monthStr = [
     "January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"
   ]
-  const dayName = hari[date.getDay()]
+  const dayName = dayStr[date.getDay()]
   const day = date.getDate()
-  const monthName = bulan[date.getMonth()]
+  const monthName = monthStr[date.getMonth()]
   const year = date.getFullYear()
   return `${dayName}, ${monthName} ${day}, ${year}`
+}
+
+export function formatDateShort(dateprm) {
+  const date = new Date(dateprm)
+  const day = date.getDate()
+  const monthStr = [
+    "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+  ]
+  const month = monthStr[date.getMonth()]
+  const year = date.getFullYear()
+  return `${month} ${day}, ${year}`
 }

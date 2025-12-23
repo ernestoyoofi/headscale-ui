@@ -50,7 +50,7 @@ export default function Sidebar_Admin({ children, pathNow = "/admin/" }) {
         <b className="ml-1.5">Headscale UI</b>
       </div>
     </header>
-    <main className="w-full pt-3 px-2.5 min-h-[calc(100dvh-112px)] sm:min-h-[calc(100dvh-100px)]">
+    <main className="w-full py-3 px-2.5 min-h-[calc(100dvh-112px)] sm:min-h-[calc(100dvh-100px)]">
       <div className="w-full max-w-4xl m-auto">
         {children}
       </div>

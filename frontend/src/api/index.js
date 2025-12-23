@@ -1,7 +1,7 @@
 import { proxyLogin, proxyNewDefaultAdmin, proxyUpdatePassword, proxyUpdateTokenkey } from "./endpoints/proxy/users"
 import { proxyGetMiddleware } from "./endpoints/proxy/middleware"
 import { getUsers, deleteUser, renameUser, createUser } from "./endpoints/headscale/users"
-import { getNode, getNodes, registerNode, approveNodeRoutes, expireNode, setNodeTags, deleteNode } from "./endpoints/headscale/nodes"
+import { getNode, getNodes, registerNode, approveNodeRoutes, expireNode, setNodeTags, deleteNode, renameNode } from "./endpoints/headscale/nodes"
 import { getPolicy, setPolicy } from "./endpoints/headscale/policy"
 
 export default {
@@ -13,17 +13,21 @@ export default {
     middleware: proxyGetMiddleware,
   },
   api: {
+    // Users
     getuser: getUsers,
     createuser: createUser,
     renameuser: renameUser,
     deleteuser: deleteUser,
+    // Nodes
     nodes: getNodes,
     node: getNode,
-    node_register: registerNode,
+    rename: renameNode,
+    register: registerNode,
     approve_routes: approveNodeRoutes,
-    node_expire: expireNode,
-    settag: setNodeTags,
-    delnode: deleteNode,
+    tags: setNodeTags,
+    expire: expireNode,
+    remove: deleteNode,
+    // Policy
     policy: getPolicy,
     setpolicy: setPolicy,
   }

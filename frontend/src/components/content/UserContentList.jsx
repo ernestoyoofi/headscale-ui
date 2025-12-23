@@ -28,11 +28,11 @@ export default function UserContentList({ data = {}, triggerRefreshData = null }
     if(loadingSessionRename) return;
     setLoadingSessionRename(true)
     const requestdata = await apiAction.api.renameuser(data.id, inputRenameData)
+    setLoadingSessionRename(false)
     if(requestdata.isError || requestdata.data.status > 399) {
       toast.error(requestdata?.data?.message||requestdata?.data||requestdata.statusText||"Unknowing")
       return;
     }
-    setLoadingSessionRename(false)
     setOpenDialogRename(false)
     refreshPage()
   }
@@ -41,11 +41,11 @@ export default function UserContentList({ data = {}, triggerRefreshData = null }
     if(loadingSessionDelete) return;
     setLoadingSessionDelete(true)
     const requestdata = await apiAction.api.deleteuser(data.id)
+    setLoadingSessionDelete(false)
     if(requestdata.isError || requestdata.data.status > 399) {
       toast.error(requestdata?.data?.message||requestdata?.data||requestdata.statusText||"Unknowing")
       return;
     }
-    setLoadingSessionDelete(false)
     setOpenDialogDelete(false)
     refreshPage()
   }
@@ -66,7 +66,7 @@ export default function UserContentList({ data = {}, triggerRefreshData = null }
     <div className="max-md:hidden w-[250px]">
       <p className="text-sm text-neutral-700">{formatDate(data.createdAt)}</p>
     </div>
-    <div>
+    <div className="w-[50px] flex justify-end">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="outline" className="cursor-pointer">
@@ -86,7 +86,7 @@ export default function UserContentList({ data = {}, triggerRefreshData = null }
           </DialogHeader>
           <div className="my-1">
             <Input
-              placeholder="Enter the username to accept delete..."
+              placeholder="Enter new username..."
               type="text"
               ref={inputRename}
               autoComplete="off"

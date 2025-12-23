@@ -5,7 +5,7 @@ import HeadscaleUnathorization from "../../../components/layout/HeadscaleUnautho
 import LoadingMiddleware from "../../../components/layout/LoadingMiddlware"
 import apiAction from "../../../api/index"
 import SideServerIssue from "../../../components/layout/SideServerIssue"
-//...
+import NodeMachineList from "../../../components/content/NodeMachineList"
 import { Button } from "../../../components/ui/button"
 import { PlusIcon } from "lucide-react"
 import { useForm } from "react-hook-form"
@@ -59,7 +59,11 @@ export default function Node() {
         </Button>
       </div>
       <div className="w-full px-3">
-        <p>Comming Soon...</p>
+        {(data.data?.data?.list).map((items, key) => (
+          <NodeMachineList data={items} key={key} triggerRefreshData={GetDataPage}/>
+        ))}
+        {/* <pre className="text-nowrap overflow-x-auto">{JSON.stringify(data,null,2)}</pre>
+        <p>Comming Soon...</p> */}
       </div>
     </>}
   </>

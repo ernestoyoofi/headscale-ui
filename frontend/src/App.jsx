@@ -9,7 +9,7 @@ import LoadingMiddleware from "./components/layout/LoadingMiddlware"
 
 export default function AppRoot() {
   return <>
-    <Toaster richColors/>
+    <Toaster richColors position="top-center"/>
     <ErrorBoundary FallbackComponent={SideClientIssue}>
       <Suspense fallback={<LoadingMiddleware />}>
         <Middleware_All>
