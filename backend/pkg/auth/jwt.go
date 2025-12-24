@@ -47,7 +47,7 @@ func JWT_Generate(UserId int, Username string, SessionID string) (string, error)
   }
 
   var jwt_secret_key = []byte(secret_key)
-  expiration := time.Now().Add(24 * time.Hour) // Only 24 Hours
+  expiration := time.Now().Add(12 * time.Hour) // Only 12 Hours
 
   dataJwt := &dataJwt{
     UserID: UserId,

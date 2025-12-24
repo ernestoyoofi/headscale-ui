@@ -120,22 +120,22 @@ export default function NodeMachineList({ data = {}, triggerRefreshData = null }
   return <div className="w-full border-t border-neutral-100 py-2 px-3 flex items-center items-start" data-node-id={String(data.id)}>
     <div className="w-[calc(100%-50px)] text-sm md:flex">
       <div className="w-full md:w-[calc(100%-488px)]">
-        <b className="mb-0.5 w-full block text-base">{data.givenName}</b>
+        <b className="mb-0.5 w-full block text-base hover:text-blue-600 hover:underline cursor-pointer">{data.givenName}</b>
         <p className="mb-1.5 text-neutral-600">{data?.user?.name||"unknowing?"}</p>
-        <div className="w-full flex gap-2 pb-1">
+        {!!data.validTags[0] && <div className="w-full flex gap-2 pb-1">
           {(data.validTags||[]).filter(a => !!a.trim())?.map((tags, key) => (
             <Badge variant="outline" key={key}>
               <span><span className="text-neutral-500">tag:</span>{tags.slice(4)}</span>
             </Badge>
           ))}
-        </div>
-        <div className="w-full flex gap-2 pb-1">
+        </div>}
+        {!!data.approvedRoutes[0] && <div className="w-full flex gap-2 pb-1">
           {data.approvedRoutes.map((tags, key) => (
             <Badge variant="outline" key={key}>
               <span><span className="text-blue-500">subnets:</span>{tags}</span>
             </Badge>
           ))}
-        </div>
+        </div>}
       </div>
       <div className="w-full pt-1 md:w-[272px] md:px-1">
         {(data?.ipAddresses||[]).map((ips, key) => (

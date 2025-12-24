@@ -71,7 +71,7 @@ export async function registerNode(user = "", key = "") {
   const query = new URLSearchParams()
   query.append("key", String(key))
   query.append("user", String(user))
-  const request = await FetchData(`/api/v1/node/register?${query.toString()}`, {
+  const request = await FetchData(`/api/v1/node/register`, {
     method: "POST", data: String(query),
     headers: {
       "Content-Type": "application/x-www-form-urlencoded"
