@@ -37,7 +37,6 @@ docker run -d \
   --name headscale-ui \
   -p 3050:3050 \
   -e HEADSCALE_URL="https://your-headscale-domain.com" \
-  -e HEADSCALE_API_KEY="your-api-key-here" \
   -e SERVER_LISTEN=":3050" \
   ernestoyoofi/headscale-ui:latest
 ```
