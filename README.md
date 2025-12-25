@@ -36,7 +36,7 @@ The easiest way to deploy Headscale UI is using Docker:
 docker run -d \
   --name headscale-ui \
   -p 3050:3050 \
-  -e HEADSCALE_URL="https://your-headscale-domain.com" \
+  -e HEADSCALE_SERVER="https://your-headscale-domain.com" \
   -e SERVER_LISTEN=":3050" \
   ernestoyoofi/headscale-ui:latest
 ```
