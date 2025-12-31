@@ -121,15 +121,15 @@ export default function NodeMachineList({ data = {}, triggerRefreshData = null }
     <div className="w-[calc(100%-50px)] text-sm md:flex">
       <div className="w-full md:w-[calc(100%-488px)]">
         <b className="mb-0.5 w-full block text-base hover:text-blue-600 hover:underline cursor-pointer">{data.givenName}</b>
-        <p className="mb-1.5 text-neutral-600">{data?.user?.name||"unknowing?"}</p>
-        {!!data.validTags[0] && <div className="w-full flex gap-2 pb-1">
+        <p className="text-neutral-600">{data?.user?.name||"unknowing?"}</p>
+        {!!data.validTags[0] && <div className="w-full flex flex-wrap gap-2 pt-2">
           {(data.validTags||[]).filter(a => !!a.trim())?.map((tags, key) => (
             <Badge variant="outline" key={key}>
               <span><span className="text-neutral-500">tag:</span>{tags.slice(4)}</span>
             </Badge>
           ))}
         </div>}
-        {!!data.approvedRoutes[0] && <div className="w-full flex gap-2 pb-1">
+        {!!data.approvedRoutes[0] && <div className="w-full flex flex-wrap gap-2 pt-2">
           {data.approvedRoutes.map((tags, key) => (
             <Badge variant="outline" key={key}>
               <span><span className="text-blue-500">subnets:</span>{tags}</span>
@@ -256,6 +256,9 @@ export default function NodeMachineList({ data = {}, triggerRefreshData = null }
             </DialogDescription>
           </DialogHeader>
           <div className="my-1">
+            {!data?.availableRoutes[0] && <div className="w-full h-12 flex items-center justify-center text-neutral-400 text-sm border-neutral-200 border rounded-md mb-1.5">
+              <p>No routes in here...</p>
+            </div>}
             {data?.availableRoutes?.map((ip_subnets, key) => (
               <label key={key} className="w-full flex items-center py-1 cursor-pointer">
                 <Checkbox
@@ -314,9 +317,16 @@ export default function NodeMachineList({ data = {}, triggerRefreshData = null }
               <p>No tag in here...</p>
             </div>}
             {valueACLTags?.map((tags, key) => (
-              <label key={key} className="w-full flex items-center py-1 px-3.5 cursor-pointer text-neutral-700 text-sm rounded-md mb-1.5 border-neutral-200 border">
-                <TagsIcon size={15}/>
-                <span className="ml-2">{tags}</span>
+              <label key={key} className="w-full flex items-center justify-between py-1 px-3.5 cursor-pointer text-neutral-700 text-sm rounded-md mb-1.5 border-neutral-200 border" onClick={() => {
+                setValueACLTags(Array.from(
+                  valueACLTags.filter(strtag => strtag !== tags)
+                ))
+              }}>
+                <div className="w-full flex items-center">
+                  <TagsIcon size={15}/>
+                  <span className="ml-2">{tags}</span>
+                </div>
+                <span className="text-red-600 text-nowrap text-sm">Remove</span>
               </label>
             ))}
             <Input

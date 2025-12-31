@@ -21,8 +21,8 @@ var defaultTokenJWT = "this-token-not-recommend-6133f1dbc2375e40"
 
 func ReadableFileTokenJWT() (string) {
   unjwttoken := "/root/secret/jwt-token"
-  if os.Getenv("UNJWT_SECRET") != "" {
-    unjwttoken = os.Getenv("UNJWT_SECRET")
+  if os.Getenv("RE_GENERATE_R") != "" {
+    unjwttoken = os.Getenv("RE_GENERATE_R")
   }
   if _, err := os.Stat(unjwttoken); os.IsNotExist(err) {
     log.Println("[Jwt]: Token generate can readable?")

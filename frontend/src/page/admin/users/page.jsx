@@ -75,13 +75,13 @@ export default function Users() {
     </>
   }
   return <>
-    {data.isLoading && <LoadingMiddleware className="h-[calc(100dvh-60px)]"/>}
+    {data.isLoading && <LoadingMiddleware className="h-[calc(100dvh-130px)]"/>}
     {(data.data?.data?.list) && <>
       <div className="w-full py-2.5 px-3">
         <h2 className="text-2xl font-bold">Users</h2>
         <p className="mt-1 text-neutral-600">Manage users on your tailnet.</p>
       </div>
-      <div className="w-full pb-4.5 flex items-center justify-end px-3">
+      <div className="w-full pb-4.5 flex items-center justify-start px-3">
         <Button variant="outline" className="cursor-pointer" onClick={() => { setDialogAddUser(true) }}>
           <PlusIcon />
           <span>Add User</span>

@@ -65,8 +65,8 @@ func main() {
   if os.Getenv("SQLITE_LOCATION") != "" {
     sqldbdir = os.Getenv("SQLITE_LOCATION")
   }
-  if os.Getenv("UNJWT_SECRET") != "" {
-    unjwttoken = os.Getenv("UNJWT_SECRET")
+  if os.Getenv("RE_GENERATE_R") != "" {
+    unjwttoken = os.Getenv("RE_GENERATE_R")
   }
 
   // Setup Directory

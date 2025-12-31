@@ -34,7 +34,7 @@ func Service_MiddlewareCheck(JwtToken string) (username string, setupAccount boo
   jwtauth, err := auth.JWT_Parse(dataJwtToken)
   if err != nil {
     log.Printf("[service/middleware-checker]: Error: %v", err.Error())
-    return "", dataHasSetup, false, false, true
+    return "", dataHasSetup, false, false, false
   }
 
   // Get User

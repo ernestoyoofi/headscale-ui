@@ -73,7 +73,7 @@ export default function UserContentList({ data = {}, triggerRefreshData = null }
             <EllipsisIcon />
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-56" align="end">
+        <DropdownMenuContent className="w-42" align="end">
           <DropdownMenuItem className="cursor-pointer" onClick={() => { setOpenDialogRename(true) }}>Rename</DropdownMenuItem>
           <DropdownMenuItem variant="destructive" className="cursor-pointer" onClick={() => { setOpenDialogDelete(true) }}>Delete</DropdownMenuItem>
         </DropdownMenuContent>

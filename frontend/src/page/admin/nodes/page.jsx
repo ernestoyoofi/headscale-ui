@@ -55,6 +55,7 @@ export default function Node() {
     inputDeviceAddUser.current = ""
     inputDeviceAdd.current.value = ""
     setDialogAddDevice(false)
+    GetDataPage()
   }
 
   const openMenuDeviceAdd = () => {
@@ -93,13 +94,13 @@ export default function Node() {
     </>
   }
   return <>
-    {data.isLoading && <LoadingMiddleware className="h-[calc(100dvh-60px)]"/>}
+    {data.isLoading && <LoadingMiddleware className="h-[calc(100dvh-130px)]"/>}
     {(data.data?.data?.list) && <>
       <div className="w-full py-2.5 px-3">
         <h2 className="text-2xl font-bold">Machine</h2>
         <p className="mt-1 text-neutral-600">Manage devices connected to your tailnet network.</p>
       </div>
-      <div className="w-full pb-4.5 flex items-center justify-end px-3">
+      <div className="w-full pb-4.5 flex items-center justify-start px-3">
         <Button variant="outline" className="cursor-pointer" onClick={openMenuDeviceAdd}>
           <PlusIcon />
           <span>Add Device</span>
@@ -109,8 +110,6 @@ export default function Node() {
         {(data.data?.data?.list).map((items, key) => (
           <NodeMachineList data={items} key={key} triggerRefreshData={GetDataPage}/>
         ))}
-        {/* <pre className="text-nowrap overflow-x-auto">{JSON.stringify(data,null,2)}</pre>
-        <p>Comming Soon...</p> */}
       </div>
       <Dialog open={dialogAddDevice} onOpenChange={triggerDialogDeviceAdd}>
         <DialogContent className="sm:max-w-[425px]">
