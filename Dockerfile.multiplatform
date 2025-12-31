@@ -15,7 +15,7 @@ WORKDIR /app/backend
 COPY ./backend/ ./
 ENV PRODUCTION_BUILD="true"
 RUN go mod tidy
-RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build "-X main.Version=v1.0.0-beta" -o /app/backend/serverbin ./cmd/server
+RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH go build "-X main.Version=v1.0.3-release" -o /app/backend/serverbin ./cmd/server
 
 # Run On Production
 FROM alpine AS base_headscaleui

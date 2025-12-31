@@ -15,7 +15,7 @@ WORKDIR /app/backend
 COPY ./backend/ ./
 ENV PRODUCTION_BUILD="true"
 RUN go mod tidy
-RUN go build -ldflags "-X main.Version=1.0.1-release" -o /app/backend/serverbin ./cmd/server
+RUN go build -ldflags "-X main.Version=1.0.3-release" -o /app/backend/serverbin ./cmd/server
 
 # Run On Production
 FROM alpine AS base_headscaleui
